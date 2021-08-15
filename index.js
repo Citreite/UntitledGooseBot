@@ -14,12 +14,22 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection();
 
 // Command handling
+
+// NEW WAY
+fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
+        .map(data => {
+                const file = require (`./commands/${file}`);
+                client.commands.set(command.data.name, command);
+        });
+
+/* OLD WAY
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.data.name, command);
 }
+*/
 
 // Registering slash commands
 const commands = [];
