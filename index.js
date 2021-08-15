@@ -25,6 +25,7 @@ for (const file of commandFiles) {
 const commands = [];
 
 // Place your client and guild ids here
+const guildId = '876124195241730048'; // The dev server
 const clientId = '876091817802739722';
 
 for (const file of commandFiles) {
@@ -38,9 +39,14 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 	try {
 		console.log('Started refreshing application (/) commands.');
 
-		await rest.put(
+		/* await rest.put(
             Routes.applicationCommands(clientId), { body: commands },
-        );
+        ); */ // This is for global commands
+
+        await rest.put(
+			Routes.applicationGuildCommands(clientId, guildId),
+			{ body: commands },
+		); // This is for guild commands
 
 		console.log('Successfully reloaded application (/) commands.');
 	} catch (error) {

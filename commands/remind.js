@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Client, Collection, Intents } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const wait = require('util').promisify(setTimeout);
 
@@ -32,10 +31,12 @@ module.exports = {
         } else {
         
         // Execute if it is less
-        await interaction.reply({ content: `<@${interaction.user.id}> I have set a timer for ${time} minutes to remind you about ${stuff}.`, ephemeral: true });
+        await interaction.reply({ content: `<@${interaction.user.id}> I have set a timer for ${time} minutes to remind you about ${stuff}.`});
         
-        await wait(time*60000); // The time period in minutes
-        await interaction.reply(`<@${interaction.user.id}> HONK! It's been ${time} minutes; don't forget to do ${stuff}.`);
+        await wait(time * 60000); // The time period in minutes
+        
+        await interaction.deleteReply();
+        await interaction.reply({ content:`<@${interaction.user.id}> HONK! It's been ${time} minutes; don't forget to do ${stuff}.`});
         
         }
 
